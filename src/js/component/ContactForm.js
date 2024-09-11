@@ -31,17 +31,17 @@ export const ContactForm = () => {
 
     const handleSubmit = async (e)=> {
         e.preventDefault();
-        // try {
-        //     if (isEdit) {
-        //         await actions.editContact(id, contactData);
-        //     } else {
-        //         await actions.addContact(contactData);
-        //     }
-        //     await actions.getContacts();
+        try {
+            if (isEdit) {
+                await actions.editContact(id, contactData);
+            } else {
+                await actions.addContact(contactData);
+            }
+            await actions.getContacts();
             navigate("/");
-        // } catch (error) {
-        //     console.error(isEdit ?"error updating contacts" :"error adding contact", error);
-        // }
+        } catch (error) {
+            console.error(isEdit ?"error updating contacts" :"error adding contact", error);
+        }
     }
 
     return (
@@ -58,6 +58,48 @@ export const ContactForm = () => {
                     <input
                         type="text"
                         name="name"
+                        className="form-control"
+                        placeholder="enter your name"
+                        value={contactData.name}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>
+                        Email
+                    </label>
+                    <input
+                        type="text"
+                        name="email"
+                        className="form-control"
+                        placeholder="enter your name"
+                        value={contactData.name}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>
+                        Phone
+                    </label>
+                    <input
+                        type="text"
+                        name="phone"
+                        className="form-control"
+                        placeholder="enter your name"
+                        value={contactData.name}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <label>
+                        Address
+                    </label>
+                    <input
+                        type="text"
+                        name="address"
                         className="form-control"
                         placeholder="enter your name"
                         value={contactData.name}
