@@ -1,9 +1,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
-	const API_URL="https://playground.4geeks.com/contact/agendas";
-	const user="BaguaJoe";
+	const API_URL = "https://playground.4geeks.com/contact/agendas";
+	const user = "BaguaJoe";
 	const handleResponse = (response) => {
-		if (!response.ok)throw {status: response.status, statusText:response.statusText};
-		return response.text().then(text => text?JSON.parse(text):{});
+		if (!response.ok) throw { status: response.status, statusText: response.statusText };
+		return response.text().then(text => text ? JSON.parse(text) : {});
 	}
 	return {
 		store: {
@@ -24,7 +24,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "yellow",
 					initial: "white"
 				},
-				
+
 				{
 					title: "FOURTH",
 					background: "green",
@@ -35,53 +35,80 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			getContacts: () => {
 				fetch(`${API_URL}/${user}/contacts`)
-				.then(handleResponse)
-				.then((data)=> {
-					console.log("fetched contactsdata:", data);
-					if(Array.isArray(data.contacts)) {
-						setStore({contacts: data.contacts});
-						console.log("contacts set in store:", data.contacts);
-					} else {
-						console.error("fetched data is not an array", data);
-						setStore({contacts: []})
-					}
-				})
-				.catch((error)=> {
-					console.error("fetching contacts failed", error);
-					error.status ===404 && getActions().addUser();
-				});
+					.then(handleResponse)
+					.then((data) => {
+						console.log("fetched contactsdata:", data);
+						if (Array.isArray(data.contacts)) {
+							setStore({ contacts: data.contacts });
+							console.log("contacts set in store:", data.contacts);
+						} else {
+							console.error("fetched data is not an array", data);
+							setStore({ contacts: [] })
+						}
+					})
+					.catch((error) => {
+						console.error("fetching contacts failed", error);
+						error.status === 404 && getActions().addUser();
+					});
 			},
 
 			addUser: () => {
 				fetch(`${API_URL}/${user}`, {
-					method: "POST", 
-					headers: {"Content-Type": "application/json"}, 
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({}),
 				})
 					.then(handleResponse)
-					.then((data)=> {
+					.then((data) => {
 						console.log("user added successfully", data);
 						getActions().getContacts();
-						
+
 
 					})
-					.catch((error)=> {
+					.catch((error) => {
 						console.error("adding user failed", error);
 					})
 			},
 
+
 			editContact: (id, contactData) => {
 				fetch(`${API_URL}/${user}/contacts/${id}`, {
 					method: "PUT",
-					headers: {"Content-Type": "application/json"},
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify(contactData),
 				})
 
 					.then(handleResponse)
-					.then(()=> {getActions().getContacts();})
+					.then(() => { getActions().getContacts(); })
 
-					.catch((error)=> {console.error("editing contacts failed", error)})
+					.catch((error) => { console.error("editing contacts failed", error) })
 			},
+
+			addContact: (contactData) => {
+				fetch(`${API_URL}/${user}/contacts`, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(contactData),
+				})
+
+					.then(handleResponse)
+					.then(() => { getActions().getContacts(); })
+
+					.catch((error) => { console.error("adding contacts failed", error) })
+			},
+
+			deleteContact: (id) => {
+				fetch(`${API_URL}/${user}/contacts/${id}`, {
+					method: "DELETE",
+					headers: { "Content-Type": "application/json" },
+				})
+
+					.then(handleResponse)
+					.then(() => { getActions().getContacts(); })
+
+					.catch((error) => { console.error("editing contacts failed", error) })
+			},
+
 
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
@@ -92,6 +119,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
 			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();

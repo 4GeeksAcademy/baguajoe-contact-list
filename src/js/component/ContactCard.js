@@ -8,8 +8,9 @@ const ContactCard = ({ contact }) => {
   const handleDelete = () => {
     actions.deleteContact(contact.id);
   }
+
     return (
-      // <div className="contact-container">
+      <div className="contact-container">
           <div className="contact-card">
             <div className="contact-image">
               <img src="https://combatbaguazhang.com/images/ChengYouLong.jpg" alt={contact.name} />
@@ -20,6 +21,7 @@ const ContactCard = ({ contact }) => {
               <p>{contact.email}</p>
               <p>{contact.phone}</p>
             </div>
+
             <div className="contact-btn-group">
               <Link to={`/editContact/${contact.id}`}>
                 <i className="btn fa-solid fa-pencil"></i>
@@ -29,7 +31,7 @@ const ContactCard = ({ contact }) => {
             </div>
 
           </div>
-      // </div>
+      </div>
     );
   };
   

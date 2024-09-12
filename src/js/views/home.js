@@ -5,6 +5,7 @@ import "../../styles/home.css";
 import ContactCard from '../component/ContactCard';
 
 
+
 export const Home = () => {
 	const { store } = useContext(Context);
 

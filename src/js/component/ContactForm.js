@@ -23,6 +23,7 @@ export const ContactForm = () => {
                 setContactData(contact);
             }
         }
+        
     }, [id, isEdit, store.contacts])
 
     const handleChange = async (e) => {
@@ -73,8 +74,8 @@ export const ContactForm = () => {
                         type="text"
                         name="email"
                         className="form-control"
-                        placeholder="enter your name"
-                        value={contactData.name}
+                        placeholder="enter your email"
+                        value={contactData.email}
                         onChange={handleChange}
                         required
                     />
@@ -87,8 +88,8 @@ export const ContactForm = () => {
                         type="text"
                         name="phone"
                         className="form-control"
-                        placeholder="enter your name"
-                        value={contactData.name}
+                        placeholder="enter your phone"
+                        value={contactData.phone}
                         onChange={handleChange}
                         required
                     />
@@ -101,13 +102,13 @@ export const ContactForm = () => {
                         type="text"
                         name="address"
                         className="form-control"
-                        placeholder="enter your name"
-                        value={contactData.name}
+                        placeholder="enter your address"
+                        value={contactData.address}
                         onChange={handleChange}
                         required
                     />
                 </div>
-                {/* [TODO copy lines 28-41, do for email, phone, address] */}
+                {/* TODO copy lines 28-41, do for email, phone, address */}
                 <button type="submit "className="btn btn-primary form-control mt-3">
                     {
                         isEdit?"Update Contact" : "save"
